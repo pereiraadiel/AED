@@ -1,5 +1,5 @@
 #include "lista.h"
-struct lst{
+struct lsta{
 	int vet[MAX];
 	int fim;
 };
@@ -30,20 +30,41 @@ int insere_elem(lista *l,int n){
 	if(l->fim>i) return 1;
 	return 0;
 }
-int remove_elem(lista *l,int n){
-	if(l==NULL||lista_vazia(l)) return 0;
+int insere_elem_ordenado(lista *l,int n){
 	int i,j;
 	for(i=0;i<l->fim;i++){
+		if(n<l->vet[i]) break;
+	}
+	if(i==l->fim){
+		insere_elem(l,n);
+		l->fim++;
+		return 1;
+	}
+	else{
+		for(j=l->fim;j>i;j--){
+			l->vet[j+1] = l->vet[j];
+		}
+		l->vet[i]=n;
+		l->fim++;
+		return 1;
+	}
+	return 0;
+}
+int remove_elem(lista *l,int n){
+	if(l==NULL||lista_vazia(l)) return 0;
+	int i,j;0
+	
+	for(i=0;i<l->fim;i++){
 		if(l->vet[i]==n){
-			if(i==l->fim-1){
+			if(i==l->fim){
 				l->fim--;
 				return 1;
 			}
 			else{
-				for(j=i;j<l->fim-1;j++){
+				for(j=i;j<l->fim;j++){
 					l->vet[j] = l->vet[j+1];
+					l->fim--;
 				}
-				l->fim--;
 				return 1;
 			}
 		}

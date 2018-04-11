@@ -1,5 +1,5 @@
-#include "lista.c"
 #include "lista.h"
+#include "lista.c"
 int main(int argc, char const *argv[])
 {
 	lista *l;
@@ -13,8 +13,6 @@ int main(int argc, char const *argv[])
 	printf("[1] Inserir elemento.\n");
 	printf("[2] Remover elemento.\n");
 	printf("[3] Mostrar lista.\n");
-	printf("[4] Zerar lista.\n");
-	printf("[5] Remover tds ocorrencias.\n");
 	printf("[0] Sair\n");
 	printf(": ");
 	scanf("%d",&op);
@@ -39,18 +37,6 @@ int main(int argc, char const *argv[])
 		case 3:
 			print_lista(l);
 			delay(8);
-			goto inicio;
-		break;
-		case 4:
-			l=cria_lista();
-			goto inicio;
-		break;
-		case 5: 
-			printf("Elemento: ");
-			scanf("%d",&n);
-			if(remove_todos(l,n)) printf("Sucesso!!\n");
-			else printf("Falha!\n");
-			delay(1);
 			goto inicio;
 		break;
 		default: goto inicio; break;
