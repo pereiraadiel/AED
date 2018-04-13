@@ -1,8 +1,8 @@
-#include "lista.h"
 #include "lista.c"
+#include "lista.h"
 int main(int argc, char const *argv[])
 {
-	lista *l;
+	lista *l,*m;
 	l = cria_lista();
 	int op,n;
 	inicio:
@@ -13,8 +13,9 @@ int main(int argc, char const *argv[])
 	printf("[1] Inserir elemento.\n");
 	printf("[2] Remover elemento.\n");
 	printf("[3] Mostrar lista.\n");
-	printf("[4] Insere ordenado.\n");
-	printf("[5] Remove ordenado\n");
+	printf("[4] Zerar lista.\n");
+	printf("[5] Remover tds ocorrencias.\n");
+	printf("[6] Intercalar duas listas.\n");
 	printf("[0] Sair\n");
 	printf(": ");
 	scanf("%d",&op);
@@ -42,19 +43,26 @@ int main(int argc, char const *argv[])
 			goto inicio;
 		break;
 		case 4:
-			printf("Elemento: ");
-			scanf("%d",&n);
-			if(insere_elem_ord(l,n)) printf("Sucesso!!\n");
-			else printf("Falha!\n");
-			delay(1);
+			l=cria_lista();
 			goto inicio;
 		break;
 		case 5: 
 			printf("Elemento: ");
 			scanf("%d",&n);
-			if(remove_elem_ord(l,n)) printf("Sucesso!!\n");
+			if(remove_todos(l,n)) printf("Sucesso!!\n");
 			else printf("Falha!\n");
 			delay(1);
+			goto inicio;
+		break;
+		case 6:
+			m = cria_lista();
+			m=menu_intercala(l);
+			if(m==NULL) printf("Erro!!\n");
+			else{
+				l = m;
+				apaga_lista(&m);
+				printf("Sucesso!\n");
+			}
 			goto inicio;
 		break;
 		default: goto inicio; break;
