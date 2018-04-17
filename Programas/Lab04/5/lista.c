@@ -7,7 +7,7 @@ struct lista{
 Lista* cria_lista(){
 	Lista *S;
 	S = (Lista*) malloc(sizeof(Lista));
-	S->vet = (char**)malloc(MAX*sizeof(char*));
+	S->vet = (String*)malloc(MAX*sizeof(char*));
 	for (int i = 0; i < MAX; i++) {
 		S->vet[i] = (char*) malloc(MAX*sizeof(char));
 	}
@@ -30,9 +30,9 @@ int insere_elem(Lista *l,String s){
 	int i;
 	if(l==NULL||lista_cheia(l)) return 0;
 	i = l->fim;
-	printf("%s\n",s);
+	//printf("%s\n",s);
 	strcpy(l->vet[l->fim++],s);
-	printf("%s\n",l->vet[l->fim-1]);
+	//printf("%s\n",l->vet[l->fim-1]);
 	if(l->fim>i) return 1;
 	return 0;
 }
