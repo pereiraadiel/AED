@@ -13,7 +13,7 @@ int main(int argc, char const *argv[])
 	printf("[1] Inserir elemento.\n");
 	printf("[2] Remover elemento.\n");
 	printf("[3] Mostrar lista.\n");
-	printf("[4] Zerar lista.\n");
+	printf("[4] Limpar lista.\n");
 	printf("[5] Remover tds ocorrencias.\n");
 	printf("[6] Intercalar duas listas.\n");
 	printf("[0] Sair\n");

@@ -2,12 +2,13 @@
 #include <stdlib.h>
 #include <string.h>
 #define MAX 100
-typedef struct list lista;
-lista *criar_lista();
-int lista_vazia(lista *l);
-int lista_cheia(lista *l);
-int insere_elem(lista *l,char *vet);
-int remove_elem(lista *l,char *vet);
-void menu();
-int escolha(lista *l,int n);
+typedef char* String;
+typedef struct lista Lista;
+Lista *cria_lista();
+void apaga_lista(Lista **l);
+int lista_vazia(Lista *l);
+int lista_cheia(Lista *l);
+int insere_elem(Lista *l,String s);
+int remove_elem(Lista *l,String s);
+void print_lista(Lista *l);
 void delay(int n);

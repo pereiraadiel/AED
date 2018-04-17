@@ -1,88 +1,72 @@
-struct list{
-	char vet[MAX][MAX];
+#include "lista.h"
+struct lista{
+	String* vet;
 	int fim;
 };
-lista *criar_lista(){
-	lista * r;
-	r = (lista*) malloc(sizeof(lista));
-	return r;
+
+Lista* cria_lista(){
+	Lista *S;
+	S = (Lista*) malloc(sizeof(Lista));
+	S->vet = (char**)malloc(MAX*sizeof(char*));
+	for (int i = 0; i < MAX; i++) {
+		S->vet[i] = (char*) malloc(MAX*sizeof(char));
+	}
+	if(S!=NULL)	S->fim=0;
+	return S;
 }
-int lista_vazia(lista *l){
-	if(l==NULL) return 0;
+void apaga_lista(Lista **l){
+	free(*l);
+	*l = NULL;
+}
+int lista_vazia(Lista *l){
 	if(l->fim==0) return 1;
 	return 0;
 }
-int lista_cheia(lista *l){
-	if(l==NULL) return 0;
-	if(l->fim>=MAX) return 1;
+int lista_cheia(Lista *l){
+	if(l->fim==MAX) return 1;
 	return 0;
 }
-int insere_elem(lista *l,char *vet){
+int insere_elem(Lista *l,String s){
+	int i;
 	if(l==NULL||lista_cheia(l)) return 0;
-	strcpy(l->vet[l->fim++],vet);
-	return 1;
+	i = l->fim;
+	printf("%s\n",s);
+	strcpy(l->vet[l->fim++],s);
+	printf("%s\n",l->vet[l->fim-1]);
+	if(l->fim>i) return 1;
+	return 0;
 }
-int remove_elem(lista *l,char *vet){
-	if(l==NULL) return 0;
+int remove_elem(Lista *l,String s){
+	if(l==NULL||lista_vazia(l)) return 0;
 	int i,j;
 	for(i=0;i<l->fim;i++){
-		if(strcmp(l->vet[i],vet)==0) break;
-	}
-	if(i==l->fim) return 0;
-	for(j=i;j<l->fim;j++){
-		strcpy(l->vet[j],"");
-		strcpy(l->vet[j],l->vet[j+1]);
-	}
-	l->fim--;
-	return 1;
-}
-void print_lista(lista *l){
-	printf("Lista = {");
-	for(int i=0;i<l->fim;i++){
-		if(i<l->fim-1) printf("%s #",l->vet[i]);
-		else printf("%s}",l->vet[i]);
-	}
-}
-void menu(){
-	system("clear");
-	printf("=============================\n");
-	printf("          Escolha\n");
-	printf("[0] Sair\n");
-	printf("[1] Add elemento\n");
-	printf("[2] Remove elemento\n");
-	printf("[3] Mostrar lista\n");
-	printf(":");
-}
-int escolha(lista *l, int n){
-	if(n==0) return 1;
-	char str[MAX];
-	switch(n){
-		case 1: 
-			printf("String: ");
-			setbuf(stdin,NULL);
-			scanf("%[^\n]s",str);
-			if(insere_elem(l,str)) printf("Inserido!\n");
-			else printf("Falha ao inserir!\n");
-			return 300;
-		break;
-		case 2:
-			printf("String: ");
-			setbuf(stdin,0);
-			scanf("%[^\n]s",str);
-			if(remove_elem(l,str)) printf("Removido!\n");
-			else printf("Falha ao remover!\n");
-			return 300; 
-		break; 
-		case 3:
-			print_lista(l);
-			return 1000;
-		break;
+		if(strcmp(l->vet[i],s)==0){
+			if(i==l->fim){
+				l->fim--;
+				return 1;
+			}
+			else{
+				for(j=i;j<l->fim;j++){
+					strcpy(l->vet[j],l->vet[j+1]);
+				}
+				l->fim--;
+				return 1;
+			}
+		}
 	}
 	return 0;
 }
-void delay(int n){
-	int i,j;
-	for(i=0;i<n;i++){
-		for(j=0;j<10000;j++);
+void print_lista(Lista *l){
+	int i=0;
+	printf("Lista\n{");
+	for(i=0;i<l->fim;i++){
+		if(i<l->fim-1)printf("%s ",l->vet[i]);
+		else printf("%s",l->vet[i]);
 	}
-}	
+	printf("}\n");
+}
+void delay(int n){
+	for(int j=0;j<n;j++){
+		for(int i=0;i<100000000;i++);
+	}
+}
