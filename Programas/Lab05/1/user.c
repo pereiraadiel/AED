@@ -1,8 +1,7 @@
-#include "lista.c"
 #include "lista.h"
 int main(int argc, char const *argv[])
 {
-	lista *l;
+	Lista *l;
 	l = cria_lista();
 	int op,n;
 	inicio:
@@ -16,30 +15,29 @@ int main(int argc, char const *argv[])
 	printf("[0] Sair\n");
 	printf(": ");
 	scanf("%d",&op);
+	if(op==0){
+		apaga_lista(l); 
+		return 0;
+	}
 	switch(op){
-		case 0: apaga_lista(&l);break;
 		case 1: 
 			printf("Elemento: ");
 			scanf("%d",&n);
 			if(insere_elem(l,n)) printf("Sucesso!!\n");
 			else printf("Falha!\n");
-			delay(1);
-			goto inicio;
+			delay(500);
 		break;
 		case 2: 
 			printf("Elemento: ");
 			scanf("%d",&n);
 			if(remove_elem(l,n)) printf("Sucesso!!\n");
 			else printf("Falha!\n");
-			delay(1);
-			goto inicio;
+			delay(500);
 		break;
 		case 3:
 			print_lista(l);
-			delay(8);
-			goto inicio;
+			delay(800);
 		break;
-		default: goto inicio; break;
 	}
-	return 0;
+	goto inicio;
 }

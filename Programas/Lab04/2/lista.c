@@ -52,11 +52,8 @@ int remove_elem(lista *l,int n){
 }
 int remove_todos(lista *l,int n){
 	if(l==NULL||lista_vazia(l)) return 0;
-	
 	int i=0,j,controle=l->fim;
-
-	while(i<l->fim)
-	{
+	while(i<l->fim){
 		if(l->vet[i]==n){
 			if(i==l->fim-1){
 				l->fim--;
