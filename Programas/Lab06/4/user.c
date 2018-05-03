@@ -20,7 +20,7 @@ int main(int argc, char const *argv[])
 	printf(":");
 	scanf("%d",&op);
 	if(op==0){
-		apaga_lista(l);
+		apaga_lista(&l);
 		//pause(); 
 		return 0;
 	}
@@ -30,40 +30,35 @@ int main(int argc, char const *argv[])
 			scanf("%d",&n);
 			if(insere_elem(&l,n)) printf("Sucesso!!\n");
 			else printf("Falha!\n");
-			delay(500);
-			//pause();
+			pause();
 		break;
 		case 2: 
 			printf("Elemento: ");
 			scanf("%d",&n);
 			if(remove_elem(&l,n)) printf("Sucesso!!\n");
 			else printf("Falha!\n");
-			delay(500);
-			//pause();
+			pause();
 		break;
 		case 3: 
 			printf("Elemento: ");
 			scanf("%d",&n);
 			if(insere_elem_ord(&l,n)) printf("Sucesso!!\n");
 			else printf("Falha!\n");
-			delay(500);
-			//pause();
+			pause();
 		break;
 		case 4: 
 			printf("Elemento: ");
 			scanf("%d",&n);
 			if(remove_elem_ord(&l,n)) printf("Sucesso!!\n");
 			else printf("Falha!\n");
-			delay(500);
-			//pause();
+			pause();
 		break;
 		case 5:
 			printf("Elemento: ");
 			scanf("%d",&n);
 			if(remove_tds_ocorrencias(&l,n)) printf("Sucesso!!\n");
 			else printf("Falha!\n");
-			delay(500);
-			//pause();
+			pause();
 		break;
 		case 6:
 			menu_intercala(&l);

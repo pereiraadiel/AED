@@ -54,7 +54,7 @@ int remove_elem(Lista **l,int elem){
 	return 1;
 }
 
-int remove_elem_ord(Lista **l, int elem){
+/*int remove_elem_ord(Lista **l, int elem){
 	if((*l)==NULL||elem < (*l)->prox->elemento) return 0;//lista vazia
 	//ou elemento nao existi.
 	Lista *temp;
@@ -67,12 +67,27 @@ int remove_elem_ord(Lista **l, int elem){
 		return 1;
 	}
 	
-	while(temp->prox!=NULL && temp->prox->elemento < elem){ //geral
+	while(temp!=NULL && temp->prox->elemento < elem){ //geral
 		temp = (*l)->prox;
 	}
 	if(temp->prox==NULL||elem < temp->prox->elemento)//elem nao existe
 	return 0;
 	temp_aux = temp->prox;
+	temp->prox = temp_aux->prox;
+	free(temp_aux);
+	return 1;
+}*/
+int remove_elem_ord(Lista **l, int elem){
+	if((*l)==NULL) return 0;
+	Lista *temp = *l;
+	if(elem==(*l)->elemento){
+		(*l) = temp->prox;
+		free(temp);
+		return 1;
+	}
+	while(temp!=NULL && temp->elemento!=elem) temp = temp->prox;
+	if(temp->prox==NULL) return 0;
+	Lista *temp_aux = temp->prox;
 	temp->prox = temp_aux->prox;
 	free(temp_aux);
 	return 1;
@@ -106,7 +121,6 @@ int remove_tds_ocorrencias(Lista **l, int elem){
 int lista_vazia(Lista *l){
 	if(l->prox==NULL) return 1;
 	return 0;
-	//algo de errado nao esta certo
 }
 void print_lista(Lista *l){
 	Lista * temp;
@@ -145,7 +159,6 @@ void menu_intercala(Lista **l){
 					insere_elem(&temp,elem);
 				}
 				(*l) = intercala_ord(&temp,l);
-				//delay(900);
 			break;
 			case 2: //inserir elem nas 2 novas listas
 				temp=cria_lista();
@@ -173,33 +186,27 @@ void menu_intercala(Lista **l){
 		}
 	}
 }
-//intercala esta com erro no primeiro elem de cada lista
 Lista * intercala_ord(Lista **A, Lista **B){
 	Lista *C = cria_lista();
 	Lista *temp;
 	Lista *temp_aux;
 	int controle=0;
 	temp = (*A);
-	while(temp->prox!=NULL){
+	while(temp!=NULL){
 		insere_elem_ord(&C,temp->elemento);
 		temp = temp->prox;
 	}
 	temp_aux = (*B);
-	while(temp_aux->prox!=NULL){
+	while(temp_aux!=NULL){
 		insere_elem_ord(&C,temp_aux->elemento);
 		temp_aux = temp_aux->prox;
 	}
 	return C;
 }
-void apaga_lista(Lista *l){
-	
-}
-
-void delay(int n){
-	int i,j;
-	for(i=0;i<n;i++){
-		for(j=0;j<250000;j++);
-	}
+void apaga_lista(Lista **l){
+	Lista *temp = (*l);
+	free(temp);
+	temp = NULL;
 }
 void pause(){
 	char c;
