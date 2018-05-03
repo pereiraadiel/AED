@@ -1,0 +1,10 @@
+typedef struct lista Lista;
+Lista * cria_lista();
+int lista_vazia(Lista *l);
+int insere_ord(Lista *l, int elem);
+int remove_ord(Lista *l, int elem);
+int tamanho(Lista *l);
+void imprimi_lista(Lista *l);
+void imprimi_tamanho(Lista *L);
+void pause();
+int maior(Lista *l);
