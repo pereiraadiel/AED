@@ -8,14 +8,14 @@ struct no{
 Lista *cria_lista(){
 	Lista *C = (Lista *) malloc(sizeof(Lista));
 	if(C){
-		C->prox = &C;
+		C->prox = C;
 		C->elemento = 0;
 	}
 	return C;
 }
 int lista_vazia(Lista **L){
-	Lista *temp = *l;
-	if(temp->prox = &temp) return 1;
+	Lista *temp = *L;
+	if(temp->prox == temp) return 1;
 	return 0;
 }
 int insere_inicio(Lista **l, int elem){
@@ -71,7 +71,7 @@ int insere_posicao(Lista *l, int elem,int posicao){
 	return 1;
 }
 int remove_elem(Lista **l, int elem){
-	if(lista_vazia(*l)) return 0;
+	if(lista_vazia(l)) return 0;
 	Lista *temp = *l;
 	Lista *temp_aux = *l;
 	while(temp_aux->prox!=temp&&temp_aux->prox->elemento!=elem){
@@ -79,12 +79,12 @@ int remove_elem(Lista **l, int elem){
 	}
 	if(temp_aux->prox==temp) return 0;
 	Lista *aux = temp_aux->prox;
-	temp_aux->prox = aux->prox
+	temp_aux->prox = aux->prox;
 	free(aux);
 	return 1;
 }
-int remove_posicao(Lista **l, int elem, int posicao){
-	if(lista_vazia(*l)) return 0;
+int remove_posicao(Lista **l, int posicao){
+	if(lista_vazia(l)) return 0;
 	Lista *temp = *l;
 	Lista *temp_aux = *l;
 	int contador=0;
@@ -94,7 +94,7 @@ int remove_posicao(Lista **l, int elem, int posicao){
 	}
 	if(temp_aux->prox==temp) return 0;
 	Lista *aux = temp_aux->prox;
-	temp_aux->prox = aux->prox
+	temp_aux->prox = aux->prox;
 	free(aux);
 	return 1;
 }
@@ -107,10 +107,10 @@ int maior(Lista *l){
 		if(temp_aux->prox->elemento>m)m=temp_aux->prox->elemento;
 		temp_aux = temp_aux->prox;
 	}
-	return maior+1;//pode existir o elemento 0 na lista
+	return m+1;//pode existir o elemento 0 na lista
 }
 void imprimi_lista(Lista *l){
-	if(lista_vazia(l)) {
+	if(lista_vazia(&l)) {
 		printf("Lista = {}\n");
 		return;
 	}
@@ -121,11 +121,11 @@ void imprimi_lista(Lista *l){
 		printf("%d ",temp_aux->prox->elemento);
 		temp_aux = temp_aux->prox;
 	}
-	printf("}\n");
+	printf("\b}\n");
 }
 int tamanho(Lista *l){
 	int tam=0;
-	if(lista_vazia(l)) return 0;
+	if(lista_vazia(&l)) return 0;
 	Lista *temp = l;
 	Lista *temp_aux = l;
 	while(temp_aux->prox!=temp){
