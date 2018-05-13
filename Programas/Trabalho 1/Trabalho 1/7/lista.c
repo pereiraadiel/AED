@@ -37,12 +37,12 @@ int remove_elem(Lista *l,int elem){
 	if(lista_vazia(l)) return 0;
 	Lista *temp = l;
 	Lista *temp_aux;
-	while(temp->prox!=NULL&&temp->prox->elem!=elem){
+	while(temp->prox!=NULL&&temp->prox->elemento!=elem){
 		temp = temp->prox;
 	}
 	if(temp->prox==NULL) return 0; //chegou ao fim da lista
 	temp_aux = temp->prox;
-	temp->prox = temp->aux->prox;
+	temp->prox = temp_aux->prox;
 	if(temp_aux->prox!=NULL){//remoçao do ultimo elemento
 		Lista *aux = temp_aux->prox;
 		aux->ant = temp_aux->ant;
@@ -59,7 +59,7 @@ int remove_todos(Lista *l,int elem){
 	while(temp->prox!=NULL){
 		if(temp->prox->elemento==elem){
 			temp_aux = temp->prox;
-			temp->prox = temp->aux->prox;
+			temp->prox = temp_aux->prox;
 			if(temp_aux->prox!=NULL){//remoçao do ultimo elemento
 				Lista *aux = temp_aux->prox;
 				aux->ant = temp_aux->ant;
@@ -90,6 +90,7 @@ Lista * multiplo_3(Lista *l){
 			if(temp->prox->elemento%3==0){
 				insere_elem(C,temp->prox->elemento);
 			}
+			temp = temp->prox;
 		}
 	}
 	return C;
@@ -101,12 +102,12 @@ void imprimi_lista(Lista *l){
 		return;
 	}
 	Lista *temp = l;
-	printf("Lista = {")
+	printf("Lista = {");
 	while(temp->prox!=NULL){
-		printf("%d",temp->prox->elemento);
+		printf("%d ",temp->prox->elemento);
 		temp = temp->prox;
 	}
-	printf("}\n");
+	printf("\b}\n");
 }
 int tamanho(Lista *l){
 	if(l==NULL||lista_vazia(l)) return 0;
@@ -117,4 +118,10 @@ int tamanho(Lista *l){
 		temp = temp->prox;
 	}
 	return tam;
+}
+void pause(){
+	char c;
+	setbuf(stdin,NULL);
+	printf("Aperte ENTER para continuar...");
+	while(c!=10) c = getchar();
 }

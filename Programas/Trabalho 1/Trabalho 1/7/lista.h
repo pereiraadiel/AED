@@ -10,4 +10,5 @@
 	Lista * multiplo_3(Lista *l);
 	void imprimi_lista(Lista *l);
 	int tamanho(Lista *l);
+	void pause();
 #endif
