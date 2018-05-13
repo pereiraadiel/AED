@@ -6,7 +6,7 @@ void menu(){
 	system("clear");
 	setlocale(LC_ALL,"Portuguese");
 	printf("==============================================\n");
-	printf("    TAD Lista Ordenada estática sequencial\n");
+	printf("TAD Lista Não Ordenada Dinâmicamente Encadeada\n");
 	printf("==============================================\n");
 	printf("\n");
 	printf("----------------------------------------------\n");
@@ -14,13 +14,13 @@ void menu(){
 	printf("----------------------------------------------\n");
 	printf("[0] SAIR\n");
 	printf("[1] Inserir elemento(s)\n");
-	printf("[2] Remover elemento\n");
+	printf("[2] Remover elemento(s)\n");
 	printf("[3] Remover pares\n");
 	printf("[4] Maior elemento\n");
 	printf("[5] Tamanho da lista\n");
-	printf("[6] Igualdade entre listas\n");
-	printf("[7] Concatenar\n");
-	printf("[8] Imprimir lista\n");
+	//printf("[6] Igualdade entre listas\n");
+	printf("[6] Concatenar\n");
+	printf("[7] Imprimir lista\n");
 	printf(":");
 }
 void sub_menu_inserir(){
@@ -29,8 +29,8 @@ void sub_menu_inserir(){
 	printf("     Inserir Elemento\n");
 	printf("----------------------------\n");
 	printf("[0] Voltar\n");
-	printf("[1] Inserir ordenado\n");
-	printf("[2] Inserir no inicio da lista\n");
+	printf("[1] Inserir no inicio da lista\n");
+	printf("[2] Inserir no final da lista\n");
 	printf(":");
 }
 void sub_menu_remover(){

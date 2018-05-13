@@ -20,7 +20,7 @@ int main(){
 						case 1:
 							printf("Elemento:");
 							scanf("%d",&elem);
-							if(insere_ord(A,elem)){
+							if(insere_elem(&A,elem)){
 								printf("Elemento inserido com sucesso!\n");
 							}
 							else printf("Falha - Elemento nao inserido!\n");
@@ -29,7 +29,7 @@ int main(){
 						case 2: 
 							printf("Elemento:");
 							scanf("%d",&elem);
-							if(inserir_inicio(A,elem)){
+							if(insere_final(A,elem)){
 								printf("Elemento inserido com sucesso!\n");
 							}
 							else printf("Falha - Elemento nao inserido!\n");
@@ -47,7 +47,7 @@ int main(){
 						case 1: 
 							printf("Elemento:");
 							scanf("%d",&elem);
-							if(remove_ord(A,elem)){
+							if(remove_elem(&A,elem)){
 								printf("Elemento removido com sucesso!\n");
 							}
 							else printf("Falha - Elemento nao removido!\n");
@@ -56,7 +56,7 @@ int main(){
 						case 2: 
 							printf("Elemento:");
 							scanf("%d",&elem);
-							if(remove_todos(A,elem)){
+							if(remove_todos(&A,elem)){
 								printf("Elemento removido com sucesso!\n");
 							}
 							else printf("Falha - Elemento nao removido!\n");
@@ -66,7 +66,7 @@ int main(){
 				}
 			break;
 			case 3: 
-				if(remove_pares(A)){
+				if(remove_pares(&A)){
 					printf("Numeros pares removidos com sucesso!!\n");
 				}
 				else printf("Falha - Nada foi removido\n");
@@ -83,16 +83,13 @@ int main(){
 				printf("tamanho da lista = %d\n",tamanho(A));
 				pause(); 
 			break;
-			case 6: 
+			/*case 6: 
 				sub_menu_igualdade();
 				scanf("%d",&sub_op);
 				if(sub_op==0) break;
 				int n_elem_igual;
 				Lista *B_igual = cria_lista();
-				if(B_igual==NULL) {
-					printf("Falha!!\n");
-					goto fim_igual;
-				}
+				
 				switch(sub_op){
 					case 1: 
 						printf("Quantos elementos para lista B? ");
@@ -100,7 +97,7 @@ int main(){
 						while(n_elem_igual--){
 							printf("Elemento:");
 							scanf("%d",&elem);
-							insere_ord(B_igual,elem);
+							insere_ord(&B_igual,elem);
 						}
 					break;
 					case 2: 
@@ -111,14 +108,14 @@ int main(){
 						while(n_elem_igual--){
 							printf("Elemento:");
 							scanf("%d",&elem);
-							insere_ord(A,elem);
+							insere_ord(&A,elem);
 						}
 						printf("Quantos elementos para lista B? ");
 						scanf("%d",&n_elem_igual);
 						while(n_elem_igual--){
 							printf("Elemento:");
 							scanf("%d",&elem);
-							insere_ord(B_igual,elem);
+							insere_ord(&B_igual,elem);
 						}
 					break;
 				}
@@ -131,17 +128,13 @@ int main(){
 				else printf("Listas diferentes!!\n");
 				fim_igual:
 				pause();
-			break;
-			case 7:
+			break;*/
+			case 6:
 				sub_menu_concatena();
 				scanf("%d",&sub_op);
 				if(sub_op==0) break;
 				int n_elem;
 				Lista *B = cria_lista();
-				if(B==NULL) {
-					printf("Falha!!\n");
-					goto fim;
-				}
 				switch(sub_op){
 					case 1: 
 						printf("Quantos elementos para lista B? ");
@@ -149,7 +142,7 @@ int main(){
 						while(n_elem--){
 							printf("Elemento:");
 							scanf("%d",&elem);
-							insere_ord(B,elem);
+							insere_elem(&B,elem);
 						}
 					break;
 					case 2: 
@@ -160,25 +153,25 @@ int main(){
 						while(n_elem--){
 							printf("Elemento:");
 							scanf("%d",&elem);
-							insere_ord(A,elem);
+							insere_elem(&A,elem);
 						}
 						printf("Quantos elementos para lista B? ");
 						scanf("%d",&n_elem);
 						while(n_elem--){
 							printf("Elemento:");
 							scanf("%d",&elem);
-							insere_ord(B,elem);
+							insere_elem(&B,elem);
 						}
 					break;
 				}
 				//printf("chamada da func concat\n");
-				A = concatenar(A,B);
+				A = concatenar(&A,&B);
 				if(!lista_vazia(A)) printf("Sucesso!!\n");
 				else printf("Falha!!\n");
 				fim:
 				pause();
 			break;
-			case 8: 
+			case 7: 
 				imprimi_lista(A);
 				pause();
 			break;
