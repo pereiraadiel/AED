@@ -39,6 +39,5 @@ void sub_menu_remover(){
 	printf("[0] Voltar\n");
 	printf("[1] Remover primeira ocorrencia\n");
 	printf("[2] Remover todas as ocorrencias\n");
-	//printf("[3] Remover maior elemento\n");
 	printf(":");
 }

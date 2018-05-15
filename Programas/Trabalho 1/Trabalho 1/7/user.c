@@ -65,9 +65,7 @@ int main(){
 				pause();
 			break;
 			case 4:
-				printf("chamando mult 3\n");
 				list = multiplo_3(A);
-				printf("chamando imprim\n");
 				if(list) imprimi_lista(list);
 				pause();
 			break;

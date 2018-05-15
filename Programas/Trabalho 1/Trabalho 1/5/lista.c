@@ -19,8 +19,8 @@ int lista_vazia(Lista *l){
 }
 
 int insere_ord(Lista **l, int elem){
-	//if(*l == NULL) return 0;
-	printf("[Insere Ord\n");
+	if(*l == NULL) return 0;
+	//printf("[Insere Ord\n");
 	imprimi_lista(*l);
 	Lista *no = (Lista *) malloc(sizeof(Lista));
 	if(no){
@@ -34,12 +34,12 @@ int insere_ord(Lista **l, int elem){
 		(*l)->elemento++;
 		return 1;
 	}
-	imprimi_lista(*l);
+	//imprimi_lista(*l);
 	return 0;
 }
 int remove_ord(Lista **l, int elem){
-	printf("[Remove]\n");
-	imprimi_lista(*l);
+	//printf("[Remove]\n");
+	//imprimi_lista(*l);
 	if((*l)==NULL) return 0;
 	Lista *temp = (*l)->prox;
 	if(elem==(*l)->prox->elemento){
@@ -56,7 +56,7 @@ int remove_ord(Lista **l, int elem){
 	temp->prox = temp_aux->prox;
 	free(temp_aux);
 	(*l)->elemento--;
-	imprimi_lista(*l);
+	//imprimi_lista(*l);
 	return 1;
 }
 void imprimi_lista(Lista *l){
@@ -71,41 +71,41 @@ void imprimi_lista(Lista *l){
 }
 
 Lista * concatenar(Lista **A, Lista **B){
-	printf("[Concatenar]\n");
-	imprimi_lista(*A);
-	imprimi_lista(*B);
+	//printf("[Concatenar]\n");
+	//imprimi_lista(*A);
+	//imprimi_lista(*B);
 	Lista *C = (Lista *) malloc(sizeof(Lista));
-	imprimi_lista(C);
+	//imprimi_lista(C);
 	if(C==NULL) return NULL;
 	Lista *temp = (*A)->prox;
 	Lista *temp_aux = (*B)->prox;
 	while(temp!=NULL){
-		imprimi_lista(C);
+	//	imprimi_lista(C);
 		insere_ord(&C,temp->elemento);
 		temp = temp->prox;
 		//free(temp);
 	}
 	while(temp_aux!=NULL){
-		imprimi_lista(C);
+	//	imprimi_lista(C);
 		insere_ord(&C,temp_aux->elemento);
 		temp_aux = temp_aux->prox;
 		//free(temp_aux);
 	}
 	C->elemento = (*A)->elemento+(*B)->elemento;
-	imprimi_lista(C);
-	printf("fim\n");
+	//imprimi_lista(C);
+	//printf("fim\n");
 	return C;
 }
 int tamanho(Lista *L){
-	printf("[Tamanho]\n");
-	imprimi_lista(L);
+	//printf("[Tamanho]\n");
+	//imprimi_lista(L);
 	if(lista_vazia(L)) return 0;
 	int i=0;
 	while(L!=NULL){
 		i++;
 		L = L->prox;
 	}
-	imprimi_lista(L);
+	//imprimi_lista(L);
 	return i;
 }
 int iguais(Lista *A, Lista *B){
@@ -123,8 +123,8 @@ int iguais(Lista *A, Lista *B){
 	return 0;
 }
 int remove_impares(Lista **A){
-	printf("[Remove Impares]\n");
-	imprimi_lista(*A);
+	//printf("[Remove Impares]\n");
+	//imprimi_lista(*A);
 	if(lista_vazia(*A)) return 0;
 	Lista *temp = (*A)->prox;
 	int removido=0;
@@ -134,9 +134,9 @@ int remove_impares(Lista **A){
 			removido++;
 		}
 		temp = temp->prox;
-		imprimi_lista(*A);
+//		imprimi_lista(*A);
 	}
-	imprimi_lista(*A);
+//	imprimi_lista(*A);
 	return removido;
 }
 int menor(Lista *A){

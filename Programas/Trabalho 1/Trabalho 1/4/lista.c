@@ -101,15 +101,25 @@ int iguais(Lista *A, Lista *B){
 	return 0;
 }
 int remove_impares(Lista **A){//nao esta removendo todos os impares
-	Lista *temp = *A;
+	Lista *temp = *A->prox;
+	Lista *temp_aux = *A;
 	if(lista_vazia(temp)) return 0;
 	int removido=0;
+	if(temp_aux->elemento%2!=0){
+		free(temp_aux);
+		temp_aux = temp;
+	}
 	while(temp!=NULL){
 		if(temp->elemento%2!=0){
-			remove_ord(A,temp->elemento);
+			temp_aux->prox = temp->prox;
+			free(temp);
+			temp = temp_aux->prox;
 			removido++;
 		}
-		temp = temp->prox;
+		else{
+			temp = temp->prox;
+		}
+		temp_aux = temp_aux->prox;
 	}
 	return removido;
 }
@@ -121,7 +131,7 @@ int menor(Lista *A){
 		if(temp->elemento<menor)menor = temp->elemento;
 		temp = temp->prox;
 	}
-	return menor+1;//mais 1 pq a lista pode conter o elemento zero
+	return menor+1;//mais 1 pq a lista pode conter o elemento zero assim n pode existir o elemento -1
 }
 void pause(){
 	char c;

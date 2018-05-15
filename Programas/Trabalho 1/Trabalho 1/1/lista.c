@@ -110,6 +110,7 @@ int remove_impares(Lista *l){
 }
 int menor(Lista *l){
 	if(l==NULL || lista_vazia(l)) return 0;
+	//return l->elemento;//ordenada
 	Lista *temp = l;
 	int i,menor = (*temp).vet[0];
 	for(i=0;i<(*temp).fim;i++){

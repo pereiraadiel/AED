@@ -12,26 +12,6 @@ int lista_vazia(Lista *l){
 	if(l==NULL) return 1;
 	return 0;
 }
-
-/*int insere_ord(Lista **l, int elem){
-	Lista *temp = (Lista *) malloc(sizeof(Lista));
-	if(temp==NULL) return 0;
-	temp->elemento = elem;
-	
-	if((*l)==NULL){
-		temp->prox = *l;
-		*l = temp;
-		return 1;
-	}
-
-	Lista *aux = *l;
-	while(aux->prox!=NULL&&aux->prox->elemento>elem){
-		aux = aux->prox;
-	}
-	temp->prox = aux->prox;
-	aux->prox = temp;
-	return 1;
-}*/
 int insere_elem(Lista **l, int elem){
 	Lista *temp = (Lista *) malloc(sizeof(Lista));
 	if(temp==NULL) return 0;
@@ -145,20 +125,6 @@ int tamanho(Lista *L){
 	}
 	return contador;
 }
-/*int iguais(Lista *A, Lista *B){
-	if(lista_vazia(A)&&lista_vazia(B)) return 1;
-	int iguais = 0;
-	if(tamanho(A)!=tamanho(B)) return 0;
-	Lista *temp = A, *temp_aux = B;
-	while(temp!=NULL){
-		if(temp->elemento!=temp_aux->elemento) return 0;
-		temp = temp->prox;
-		temp_aux = temp_aux->prox;
-		iguais++;
-	}
-	if(iguais==tamanho(A)) return 1;
-	return 0;
-}*/
 int remove_pares(Lista **A){
 	Lista *temp = *A;
 	if(lista_vazia(temp)) return 0;

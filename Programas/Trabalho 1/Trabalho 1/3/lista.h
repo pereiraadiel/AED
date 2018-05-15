@@ -10,7 +10,6 @@
 	void imprimi_lista(Lista *l);
 	Lista * concatenar(Lista **A, Lista **B);
 	int tamanho(Lista *L);
-	//int iguais(Lista *A, Lista *B);
 	int remove_pares(Lista **A);
 	int maior(Lista *A);
 	void pause();

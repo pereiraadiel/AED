@@ -26,15 +26,6 @@ int main(){
 							else printf("Falha - Elemento nao inserido!\n");
 							pause();
 						break;
-						/*case 2: 
-							printf("Elemento:");
-							scanf("%d",&elem);
-							if(inserir_inicio(A,elem)){
-								printf("Elemento inserido com sucesso!\n");
-							}
-							else printf("Falha - Elemento nao inserido!\n");
-							pause();
-						break;*/
 					}
 				}
 			break;
@@ -53,15 +44,6 @@ int main(){
 							else printf("Falha - Elemento nao removido!\n");
 							pause();
 						break;
-						/*case 2: 
-							printf("Elemento:");
-							scanf("%d",&elem);
-							if(remove_todos(&A,elem)){
-								printf("Elemento removido com sucesso!\n");
-							}
-							else printf("Falha - Elemento nao removido!\n");
-							pause();
-						break;*/
 					}
 				}
 			break;
