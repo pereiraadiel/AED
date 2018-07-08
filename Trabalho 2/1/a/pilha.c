@@ -13,57 +13,53 @@ Pilha cria_pilha(){
 int pilha_vazia(Pilha p){
 	return !p;
 }
-int empilhar(Pilha p, int elem){
+int empilhar(Pilha *p, int elem){
 	Pilha No = (Pilha) malloc(sizeof(struct no));
 	if(No){
 		No->elem = elem;
-		No->prox = p;
-		p = No;
+		No->prox = *p;
+		*p = No;
 		return 1;
 	}
 	return 0;
 }
-int desempilhar(Pilha p, int *elem){
-	if(pilha_vazia(p)) return 0;
-	Pilha No = p;
+int desempilhar(Pilha *p, int *elem){
+	if(pilha_vazia((*p))) return 0;
+	Pilha No = *p;
 	*elem = No->elem;
-	p = No->prox;
+	*p = No->prox;
 	free(No);
 	return 1;
 }
-int le_topo(Pilha p, int *elem){
-	if(pilha_vazia(p)) return 0;
-	*elem = p->elem;
+int le_topo(Pilha *p, int *elem){
+	if(pilha_vazia((*p))) return 0;
+	*elem = (*p)->elem;
 	return 1;
 }
 
-void imprimir(Pilha p){
-	if(pilha_vazia(p)) {
+void imprimir(Pilha *p){
+	if(pilha_vazia((*p))) {
 		printf("Pilha = []\n");
 		return;
 	}
 	printf("Pilha = [");
-	Pilha temp = p;
+	Pilha temp = *p;
 	while(temp!=NULL){
 		printf("%d ",temp->elem);
 		temp = temp->prox;
 	}
 	printf("\b]\n");
 }
-void imprimir_rev(Pilha p){
-	if(pilha_vazia(p)) {
+void imprimir_rev(Pilha *p){
+	if(pilha_vazia((*p))) {
 		printf("Pilha = []\n");
 		return;
 	}
-	Pilha temp = p;
+	Pilha temp = *p;
 	Pilha T = cria_pilha();
-	if(!T) {
-		printf("Ocorreu um erro!\n");
-		return;
-	}
 	while(temp!=NULL){
-		empilhar(T,temp->elem);
+		empilhar(&T,temp->elem);
 		temp = temp->prox;
 	}
-	imprimir(T);
+	imprimir(&T);
 }
