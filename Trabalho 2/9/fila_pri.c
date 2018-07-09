@@ -3,77 +3,75 @@
 #include "fila_pri.h"
 
 struct no{
-	int elem,pri;
-	struct no* prox;
+    int info;
+    struct no *prox;
 };
 
-Fila cria_fila(){
-	return NULL;
-}
-int fila_vazia(Fila *f){
-	return !(*f);
-}
-int inserir(Fila *f, int elem,int pri){
-	Fila No = (Fila) malloc(sizeof(struct no));
-	if(No==NULL)return 0;
-	No->elem=elem;
-	No->pri=pri;
-	if(fila_vazia(f)){
-		(*f)=No;
-		No->prox=NULL;
-		return 1;
-	}
-	Fila temp = (*f);
-	while(temp->prox!=NULL){
-		if(temp->prox->pri>=pri) break;
-		temp=temp->prox;
-	}
-	No->prox=temp->prox;
-	temp->prox=No;
-	return 1;
+struct Fila{
+    struct no *ini, *fim;
+};
+
+fila cria_fila(){
+    fila f=(fila)malloc(sizeof(struct Fila));
+    if(f) f->ini=f->fim=NULL;
+    return f;
 }
 
-int remover_menor_prioridade(Fila *f, int *elem){
-	if(fila_vazia(f)) return 0;
-	Fila No = (*f);
-	*elem=No->elem;
-	(*f)=No->prox;
-	free(No);
-	return 1;
+int fila_vazia(fila f){
+    return !f->ini;
 }
 
-int remover_maior_prioridade(Fila *f, int *elem){
-	if(fila_vazia(f)) return 0;
-	Fila No = (*f);
-	while(No->prox!=NULL) No=No->prox;
-	*elem=No->elem;
-    No=No->prox;
-	return 1;
-}
-
-int remover(Fila *f, int *elem, int tipo){
-    if(tipo==1) remover_maior_prioridade(f,elem);
-    else remover_menor_prioridade(f,elem);
+int inserir(fila f, int elem){
+    struct no *aux=(struct no *)malloc(sizeof(struct no));
+    if(aux==NULL) return 0;
+    aux->info=elem;
+    if(fila_vazia(f)){
+        f->ini=f->fim=aux;
+        aux->prox=NULL;
+        return 1;
+    }
+    if(elem<=f->ini->info){
+        aux->prox=f->ini;
+        f->ini=aux;
+        return 1;
+    }
+    if(elem>=f->fim->info){
+        f->fim->prox=aux;
+        aux->prox=NULL;
+        f->fim=aux;
+        return 1;
+    }
+    struct no *aux2;
+    for(aux2=f->ini;aux2->prox!=NULL &&
+     aux2->prox->info<elem;aux2=aux2->prox);
+    aux->prox=aux2->prox;
+    aux2->prox=aux;
     return 1;
 }
 
-void imprimir(Fila *f){
-    if(fila_vazia(f)) {
-        printf("[FILA VAZIA]\n");
-        return;
-    }
-    printf("Fila: [");
-    Fila temp = (*f);
-    while(temp!=NULL) {
-        printf("%d ",temp->elem);
-        temp = temp->prox;
-    }
-    printf("\b]\n");
+int remover(fila f, int *elem){
+    if(fila_vazia(f)) return 0;
+    struct no *aux=f->ini;
+    *elem=aux->info;
+    f->ini=aux->prox;
+    free(aux);
+    return 1;
 }
 
+void imprimir(fila f){
+    if(fila_vazia(f)) {
+    	printf("[FILA VAZIA]\n");
+    	return;
+    }
+    printf("Fila: [");
+    for(struct no *aux=f->ini;aux!=NULL;aux=aux->prox)
+        printf("%d ", aux->info);
+    printf("\b]\n");
+    return;
+}
 void aguarde(){
-    printf("Aperte ENTER para continuar...");
-    char c=65;
-    setbuf(stdin,NULL);
-    while(c!=10) c=getchar();
+	printf("Aperte ENTER para continuar...");
+	char c;
+	setbuf(stdin,NULL);
+	while(c!=10) c=getchar();
 }

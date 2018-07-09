@@ -3,8 +3,8 @@
 #include "fila_pri.h"
 
 int main(){
-    int op=-1,elem,pri;
-    Fila f;
+    int op=-1,elem;
+    fila f = cria_fila();
     while(1){
         printf("-----------------------\n");
         printf("        Escolha\n");
@@ -18,23 +18,19 @@ int main(){
         if(op==0) break;
         switch(op){
             case 1: 
-                imprimir(&f);
+                imprimir(f);
             break;
             case 2: 
                 printf("Elem:"); scanf("%d",&elem);
-                printf("Prioridade:"); scanf("%d",&pri);
-                inserir(&f,elem,pri);
+                inserir(f,elem);
             break;
             case 3: 
-                printf("[1] Maior prioridade\n");
-                printf("[2] Menor prioridade\n");
-                printf("Opcao;"); scanf("%d",&pri);
-                remover(&f,&elem,pri);
+                remover(f,&elem);
                 printf("Elemento removido: %d\n",elem);
             break;
         }
         aguarde();
-        system("clear");
+        system("cls");
     }
     return 0;
 }
