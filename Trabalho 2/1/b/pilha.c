@@ -102,6 +102,6 @@ int palindrome(char *str){
 		temp = temp->prox;
 	}
 
-	if(igualdade(&ida,&volta)) return 1;
-     return 0;
+	return igualdade(&ida,&volta);
+	
 }
