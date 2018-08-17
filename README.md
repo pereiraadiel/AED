@@ -1,6 +1,9 @@
-# 				AED 1
+# 				UFU 2018
 
-# Curso: Ciência da Computação 2018-1
+# Curso: Ciência da Computação
 # Universidade Federal de Uberlândia
-# Aluno: Adiel Pereira Prado
-# Disciplina: Algoritmos e estruturas de Dados 1
+# 
+# Repositório para códigos criados nas disciplinas de programação
+# AED1, AED2, AOC1, POO1, Prolog
+# 
+#                             Adiel Pereira
