@@ -1,0 +1,71 @@
+##############################################
+# Tempo Execucao TAD Lista Sequencial Estatica
+
+
+? PESQUISA: 1000 //elementos inseridos
+> RESPOSTA:
+	Inserção Inicio	: 0 milissegundos
+	Inserção Fim	: 0 milissegundos
+	Consulta		: 0 milissegundos
+
+? PESQUISA: 2000 //elementos inseridos
+> RESPOSTA:
+	Inserção Inicio	: 0 milissegundos
+	Inserção Fim	: 0 milissegundos
+	Consulta		: 0 milissegundos
+
+? PESQUISA: 30000 //elementos inseridos
+> RESPOSTA:
+	Inserção Inicio	: 1 milissegundos
+	Inserção Fim	: 0 milissegundos
+	Consulta		: 0 milissegundos
+
+? PESQUISA: 40000 //elementos inseridos
+> RESPOSTA:
+	Inserção Inicio	: 1 milissegundos
+	Inserção Fim	: 0 milissegundos
+	Consulta		: 1 milissegundos
+
+? PESQUISA: 100000 //elementos inseridos
+> RESPOSTA:
+	Inserção Inicio	: 4 milissegundos
+	Inserção Fim	: 1 milissegundos
+	Consulta		: 2 milissegundos
+
+
+###############################################
+# Tempo Execucao TAD Lista Dinamica Encadeada
+
+? PESQUISA: 1000 //elementos inseridos
+> RESPOSTA:
+	Inserção Inicio	: 0 milissegundos
+	Inserção Fim	: 0 milissegundos
+	Consulta		: 0 milissegundos
+
+? PESQUISA: 2000 //elementos inseridos
+> RESPOSTA:
+	Inserção Inicio	: 0 milissegundos
+	Inserção Fim	: 0 milissegundos
+	Consulta		: 0 milissegundos
+
+? PESQUISA: 30000 //elementos inseridos
+> RESPOSTA:
+	Inserção Inicio	: 1 milissegundos
+	Inserção Fim	: 0 milissegundos
+	Consulta		: 0 milissegundos
+
+? PESQUISA: 40000 //elementos inseridos
+> RESPOSTA:
+	Inserção Inicio	: 1 milissegundos
+	Inserção Fim	: 0 milissegundos
+	Consulta		: 1 milissegundos
+
+? PESQUISA: 100000 //elementos inseridos
+> RESPOSTA:
+	Inserção Inicio	: 4 milissegundos
+	Inserção Fim	: 1 milissegundos
+	Consulta		: 2 milissegundos
+
+
+
+
