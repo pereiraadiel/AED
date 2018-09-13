@@ -1,4 +1,6 @@
 import java.util.Scanner;
+import java.lang.Math.pow;
+import java.lang.Math.sqrt;
 
 public class Ponto{
 	private double x,y;
