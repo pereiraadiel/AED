@@ -63,6 +63,9 @@ public class Cadastro {
 		if(posicao>=0) atualizaCont(false);
 		else System.out.println("ERRO - posicao invalida");
 	}
+	public void printf(String arg){
+		System.out.print(arg);
+	}
 	public static void main(String[] args) {
 		String str[] = new String[5];
 		Cadastro c = new Cadastro(str);
@@ -81,6 +84,8 @@ public class Cadastro {
 		System.out.println("==============================");
 		for(int i=0;i<5;i++) System.out.println("Posicao ["+i+"]: "+c.buscarNome(i));
 		System.out.println("==============================");
+		int num= 0;
+		c.printf("teste = "+num+"\n");
 
 	}
 
