@@ -55,8 +55,9 @@ public class Cadastro {
 		int num = posicao;
 		//System.out.println("posicao = "+posicao);
 		if(posicao<this.cont){
-			while(num<=cont){
-				this.nomes[num++]=this.nomes[num];
+			while(num<=cont-1){
+				if(num != cont-1)this.nomes[num++]=this.nomes[num];
+				else this.nomes[num++] = "";
 			}
 		}
 		if(posicao>=0) atualizaCont(false);
@@ -64,15 +65,19 @@ public class Cadastro {
 	}
 	public static void main(String[] args) {
 		String str[] = new String[5];
-		for(int i=0;i<5;i++) str[i] = "-";
 		Cadastro c = new Cadastro(str);
+		c.inicializaCont();
 		System.out.println("==============================");
-		c.inserirNome("A");
-		c.inserirNome("P");
-		c.inserirNome("C");
+		for(int i=0;i<5;i++) System.out.println("Posicao ["+i+"]: "+c.buscarNome(i));
+		System.out.println("==============================");
+		c.inserirNome("-A-");
+		c.inserirNome("-P-");
+		c.inserirNome("-6-");
+		c.inserirNome("-9-");
+		c.inserirNome("---");
 		for(int i=0;i<5;i++) System.out.println("Posicao ["+i+"]: "+c.buscarNome(i));
 		c.excluirNome(2);
-		c.excluirNome("A");
+		c.excluirNome("-A-");
 		System.out.println("==============================");
 		for(int i=0;i<5;i++) System.out.println("Posicao ["+i+"]: "+c.buscarNome(i));
 		System.out.println("==============================");
