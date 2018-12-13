@@ -60,3 +60,17 @@ int inserir_aresta(Grafo *grafo, int origem, int destino, int eh_digrafo, float 
     if(!eh_digrafo) inserir_aresta(grafo,destino,origem,1,peso);
     return TRUE;
 }
+
+int remover_aresta(Grafo *grafo, int origem, int destino){
+    if(grafo==NULL) return FALSE;
+    if(origem<0 || origem >= grafo->num_vertices) return FALSE;
+    if(destino<0 || destino >= grafo->num_vertices) return FALSE;
+    if(grafo->arestas[origem][grafo->grau[origem]] != destino) return FALSE;
+    if(grafo->eh_ponderado) grafo->pesos[origem][grafo->grau[origem]] = 0;
+    grafo->grau[origem] --;
+    if(!grafo->eh_digrafo) {
+        grafo->eh_digrafo = !grafo->eh_digrafo;
+        inserir_aresta(grafo, destino,origem);
+    }
+    return TRUE;
+}
