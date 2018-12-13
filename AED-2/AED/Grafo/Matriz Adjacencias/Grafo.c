@@ -41,11 +41,12 @@ int inserir_aresta(Grafo *grafo, int origem , int destino, int eh_digrafo){
     if(!eh_digrafo) inserir_aresta(grafo,destino,origem,1);
     return TRUE;
 }
-
-int remover_aresta(Grafo *grafo, int origem, int destino){
+int remover_aresta(Grafo *grafo, int origem, int destino, int eh_digrafo){
     if(grafo==NULL) return FALSE; // grafo nao alocado
     if(origem<0 || origem >= grafo->TAM) return FALSE; // origem invalida
     if(destino<0 || destino >= grafo->TAM) return FALSE; // destino invalido
     if(grafo->matriz[origem][destino]==0) return FALSE; // nao ha nada 
-    grafo->matriz[origem][destino] --; return TRUE; // remocao efetuada
+    grafo->matriz[origem][destino] --; 
+    if(!eh_digrafo) remover_aresta(grafo, destino, origem, 1);
+    return TRUE; // remocao efetuada
 }
