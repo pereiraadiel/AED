@@ -10,7 +10,7 @@ ler_arquivo(Stream):-
 	at_end_of_stream(Stream),!.
 
 ler_arquivo(Stream):-
-	/+ at_end_of_stream(Stream),
+	\+ at_end_of_stream(Stream),
 	ler_palavra(Stream,PCidade),
 	ler_palavra(Stream,SCidade),
 	ler_palavra(Stream,Dist),
@@ -105,43 +105,43 @@ mostra_distancia(CidadeA, CidadeB):-
 	send(Janela, open).
 
 
-retirar_ocor(_,[],[]).
-retirar_ocor(X,[X|Y],R):-
-retirar_ocor(X,Y,R).
-retirar_ocor(X,[Y|Z],R):-
-X\=Y,
-retirar_ocor(X,Z,R1),
-inserir_cabeca(Y,R1,R).
+
+retirar_ocorrencia(_,[],[]).
+retirar_ocorrencia(Ocorrencia,[Ocorrencia|Resto],Resultado):-
+	retirar_ocorrencia(Ocorrencia,Resto,Resultado).
+retirar_ocorrencia(Ocorrencia,[Temp|Resto],Resultado):-
+	Ocorrencia\=Temp,
+	retirar_ocorrencia(Ocorrencia,Resto,R1),
+	inserir_cabeca(Temp,R1,Resultado).
 
 comprimir([],[]).
-comprimir([X|Y],R):-
-comprimir(Y,R2),
-retirar_ocor(X,R2,R1),
-inserir_cabeca(X,R1,R).
+comprimir([Head|Tail],Resultado):-
+	comprimir(Tail,R2),
+	retirar_ocor(Head,R2,R1),
+	inserir_cabeca(Head,R1,Resultado).
 
-inserir_cabeca(X,R,[X|R]).
+inserir_cabeca(Objeto,Resto,[Objeto|Resto]).
 
 listar_cidades:-
-	setof(X,Y^caminho(X,Y),L1),
-	setof(X1,Y1^caminho(Y1,X1),L2),
-	concatena(L1,L2,L3),
-	comprimir(L3,L),
-	length(L,Tam),!,
-	new(J, frame('quantidade_de_cidades')),
-	new(D, dialog),
-	send(D, append(text_item('N de cidades :', Tam))),
-	send(J, append, D),
-	send(J,open).
+	setof(X,Y^caminho(X,Y),Lista1),
+	setof(X1,Y1^caminho(Y1,X1),Lista2),
+	concatena(Lista1,Lista2,Lista3),
+	comprimir(Lista3,Lista),
+	length(Lista,Tam),!,
+	new(Janela, frame('quantidade_de_cidades')),
+	new(Caixa, dialog),
+	send(Caixa, append(text_item('Numero de cidades :', Tam))),
+	send(Janela, append, Caixa),
+	send(Janela, open).
 	
-
-concatena([], L, L). 
-concatena([X | R1], L, [X | R]):-
-     concatena(R1, L, R). 
+concatena([], Lista, Lista). 
+concatena([Head |Tail], Lista, [Head | Resto]):-
+     concatena(Tail, Lista, Resto). 
 
 inverter([],[]).
-inverter([X|Y],R):-
-inverter(Y,R1),
-append(R1,[X],R).
+inverter([Head|Tail],Resultado):-
+inverter(Tail,Result),
+append(Result,[Head],Resultado).
 
 solve_prof(Node, Solution):-
 	depthfirst([],Node,Solution1),
@@ -156,45 +156,47 @@ depthfirst(Path, Node, Sol):-
 	depthfirst([Node|Path],Node1, Sol).
 
 
-todos_caminhos(X,Y):-
-	assert(goal(Y)),
-	setof(H,X^solve_prof(X,H),L),
-	distancia_lista(L, Lista_dist),
-%	separar(L,Lista_dist,Fim),
-	string_to_list(A,L),
+todos_caminhos(CidadeA,CidadeB):-
+	assert(goal(CidadeB)),
+	setof(Temp,CidadeA^solve_prof(CidadeA,Temp),List),
+	distancia_lista(List, Lista_dist),
+	separar(List,Lista_dist,Fim),
+	string_to_list(A,List),
 	string_to_list(B,Lista_dist),
 	janela_caminhos(A, B),
 	retractall(goal(_)).
 	
 janela_caminhos(L, Distancias):-
-	new(J, frame('Caminhos')),
-	new(D,dialog),
-	send(D, append(text_item('Cidades: ', A)),
-	send(J, append, D),
-	send(J, open).
+	new(Janela, frame('Caminhos')),
+	%caminhos()
+	new(Caixa, dialog),
+	send(Caixa, append(text_item('Cidades: ')), % falta alguma coisa
+	send(Janela, append, Caixa),
+	%send(Janela, open).
 
 %separar([],[],[]).
-%separar([H|T],[H1|T1],R):-
-%	append([H1],[],L1),
-%	append([H],L1,L),
-%	separar(T,T1,R1),
-%	juntar(L,R1,R).
-
+separar([Head|Tail],[Head1|Tail1],Resultado):-
+	append([Head1],[],Lista1),
+	append([Head],Lista1,Lista),
+	separar(Tail,Tail1,Resultado1),
+	%juntar(Lista,Resultado1,Resultado).
 
 distancia_lista([],[]).
-distancia_lista([H|T],R):-
-	distanciar(H,R1),
-	distancia_lista(T,R2),
-	juntar(R1,R2,R).
+distancia_lista([Head|Tail],Resultado):-
+	distanciar(Head,Resultado1),
+	distancia_lista(Tail,Resultado2),
+	juntar(Resultado1,Resultado2,Resultado).
 
 juntar(R1,R2,[R1|R2]).
+obter_cabeca([Head|_],Head).
 
 distanciar([_],0).
-distanciar([H|T],R):-
-	retira_cabeca(T,H1),
-	distancia(H,H1,Dist1),
-	distanciar(T,Dist2),
-	R is Dist1 + Dist2.
+distanciar([Head|Tail],Resultado):-
+	obter_cabeca(Tail,Head1),
+	distancia(Head,Head1,Dist1),
+	distanciar(Tail,Dist2),
+	Resultado is Dist1 + Dist2.
 
 
-retira_cabeca([H|_],H).
+
+
