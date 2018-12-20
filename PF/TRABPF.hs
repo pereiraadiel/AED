@@ -1,89 +1,182 @@
-data ClienteQChega = Nao | Sim TempoQChegou TempoPAtend
-type TempoQChegou  = Int
-Type TempoPAtend   = Int
+{-
+	TRABALHO DE PROGRAMACAO FUNCIONAL
+	
+	1. Obter tempo de espera em uma fila de caixa
 
-data ClienteQSai   = Nenhum
-                    |Liberado TempoQChegou TempoDEsp TempoPAtend
-type TempoDEsp  = Int
+	2. Obter numero necessario de caixas para que a espera seja zero
 
+	3. Repetir 1 e 2 usando round-robin
+
+	4. Modelar uma fila para varios caixas (usando EstadoDoServidor como fila)
+	
+	Aluno......... Adiel Pereira Prado 
+	Matricula..... 11721BCC008
+ -}
+
+
+data ClienteQChega = Nao | Sim TempoQChegou TempoPAtend deriving(Show, Read, Eq, Ord)
+data CLienteQSai = Nenhum|Liberado TempoQChegou TempoDEsp TempoPAtend deriving(Show, Read, Eq, Ord)
+
+type TempoDEsp = Int
+type TempoQChegou = Int
+type EstadoDaFila = (Tempo, TempoPAtend,[ClienteQChega])
+type EstadoDoServidor = [EstadoDaFila]
+type EstadoDoServidor2 = ([EstadoDaFila],[ClienteQChega])
+type TempoPAtend = Int
+type Tempo = Int
 type Fila = [Int]
 
+-- Variaveis para aleatorizar
+	seed :: Integer
+	seed = 52334
 
--- Implemetacao da fila por uma lista
-estaVazia :: Fila -> Bool
-estaVazia [] = True
-estaVazia _  = False
+	mult :: Integer
+	mult = 98190
 
-enfileira :: Int -> Fila -> Fila
-enfileira a x = x++[a]
+	incr :: Integer
+	incr = 73150
 
-desenfileira :: Fila -> (Int,Fila)
-desenfileira x
-            | not (estaVazia x) = (head x, tail x)
-            | otherwise         = error "Erro: A fila esta vazia"
+	modul :: Integer
+	modul = 13972
+
+-- Fim Variaveis para aleatorizar 
+
+-- Operacoes basicas da fila
+	estaVazia :: Fila -> Bool
+	estaVazia [] = True
+	estaVazia _  = False
+
+	enfileira :: Int -> Fila -> Fila
+	enfileira num fila = fila ++ [num]
+
+	desenfileira :: Fila -> (Int, Fila)
+	desenfileira fila
+		| not(estaVazia fila) = (head fila, tail fila)
+		| otherwise = error "ERRO - A fila esta vazia"
+
+	tamanhoFila :: EstadoDaFila -> Int -- versao menos eficiente
+	tamanhoFila (tx,ta,[]) = 0
+	tamanhoFila (tx,ta,(x:xs)) = 1 + tamanhoFila(tx, ta, xs)
+
+	tamFila :: EstadoDaFila -> Int
+	tamFila (tx,ta,fila) = length fila
+
+	filaVazia :: EstadoDaFila -> Bool
+	filaVazia (tx,ta,fila)
+		| length fila == 0 = True
+		| otherwise = False
+
+	filaVaziaB :: EstadoDaFila -> Bool -- versao menos eficiente
+	filaVaziaB (tx,ta,[]) = True
+	filaVaziaB (tx,ta,[fila]) = False
+
+-- Fim Operacoes basicas da fila
 
 
-{-- Implementacao da fila por duas listas
- estaVazia ([], []) = True
- estaVazia _        = False
+-- Manipulacao da fila
+	adicionarCliente :: ClienteQChega -> EstadoDaFila -> EstadoDaFila
+	adicionarCliente cliente(tempo, tempoDeAtendimento, cliente1) =
+		(tempo, tempoDeAtendimento,cliente1 ++ [cliente])
 
- enfileira a (l,r)  = (l,(a:r))
+	processaFila :: EstadoDaFila -> (EstadoDaFila,[CLienteQSai])
+	processaFila(tempo, tempoDeAtendimento, []) = ((tempo+1,tempoDeAtendimento,[]),[])
+	processaFila(tempo, tempoDeAtendimento,((Sim a tempoNecDAtend): resto))
+		| tempoDeAtendimento < tempoNecDAtend = (((tempo+1),(tempoDeAtendimento+1),((Sim a tempoNecDAtend): resto)),[])
+		| otherwise = ((tempo+1, 0, resto),[Liberado a (tempo-tempoNecDAtend-a) tempoNecDAtend])
 
- desenfileira ((a:l),r) = (a,(l,r))
- desenfileira ([], [])  = error "Erro: A fila esta vazia"
- desenfileira ([], r)   = desenfileira (reverse r, [])
+	insereCliente :: Int -> ClienteQChega -> EstadoDoServidor -> EstadoDoServidor
+	insereCliente num cliente servidor = take num servidor ++ [novoEstadoFila] ++ drop(num+1) servidor
+		where
+			novoEstadoFila = adicionarCliente cliente (servidor!!num)
 
---}
-adicionaCliente :: ClienteQChega -> EstadoDaFila -> EstadoDaFila
-adicionaCliente m (tempo, tempoPatend, ml) = (tempo, tempoPatend, ml++[m])
+	processaServidor :: EstadoDoServidor -> (EstadoDoServidor,[CLienteQSai])
+	processaServidor [] = ([],[])
+	processaServidor(x:xs) = (px:pxs), mess ++ messes)
+		where
+			(px, mess) = processaFila x
+			(pxs,messes) = processaServidor xs
 
-processaFila :: EstadoDaFila -> (EstadoDaFila,[ClienteQSai])
-processaFila (tempo, tempoPatend, (Sim a tempoNeededPatend:resto)
-  | tempoPatend < tempoNeededPatend = 
-    ((tempo+1),tempoNeededPatend+1,((Sim a tempoNeededPatend::resto),[]))
-  | otherwise =
-    ((tempo+1,0,resto),[Liberado a (tempo-tempoNeededPatend-a) tempoNeededPatend])
+	adicionarObjeto :: ClienteQChega -> EstadoDoServidor -> EstadoDoServidor
+	adicionarObjeto Nao estServ = estServ
+	adicionarObjeto(Sim tempoChegada tempoNecAtend) estServ = 
+		insereCliente(menorFila estServ)(Sim tempoChegada tempoNecAtend) estServ
 
-processaFila (tempo, tempoPatend, []) = ((tempo+1, tempoPatend, []),[])
+	menorFila :: EstadoDoServidor -> Int
+	menorFila [x] = 0
+	menorFila(x:xs)
+		| tamanhoFila(xs!!menor) <= tamanhoFila x = menor + 1
+		| otherwise = 0
+		where
+			menor = menorFila xs
 
-filaDeInicio :: EstadoDaFila 
-filaDeInicio  = (0,0,[])
+-- Fim Manipulacao da fila
 
-tamanhoDaFila :: EstadoDaFila -> Int
-tamanhoDaFila (tempo, tempoPatend, l) = length l
 
-filaVazia :: EstadoDaFila -> Bool
-filaVazia (t,s,q) = (q == [])
+-- Inicializacao
+    filaInicial :: EstadoDaFila
+    filaInicial = (0,0,[])
 
-type Tempo            = Int 
-type EstadoDaFila     = (Tempo, TempoPAtend, [ClienteQChega])
-type EstadoDoServidor = [EstadoDaFila]
+    estadoInicialServidor :: EstadoDoServidor
+    estadoInicialServidor = copy numFilas filaInicial
 
-colocaNumaFila :: Int -> ClienteQChega -> EstadoDoServidor -> EstadoDoServidor
-colocaNumaFila n im st
-        = take n st
-          ++ [novoEstadoDaFila]
-          ++ drop (n+1) st
-          where
-          	novoEstadoDaFila = adicionaCliente im (st!!n)
+    copy :: Int -> EstadoDaFila -> EstadoDoServidor
+    copy numFilas estServ | numFilas == 0 = []
+                          | otherwise = [estServ] ++ copy(numFilas-1) estServ
 
-processaServidor :: EstadoDoServidor -> (EstadoDoServidor,[ClienteQSai])
-processaServidor [] = ([], [])
-processaServidor (q:qs) = ((nq:nqs),mess ++messes)
-                 where
-                 	(nq,mess) = processaFila q
-                 	(nqs, messes) = processaServidor qs
+    processaSimulacao :: EstadoDoServidor -> ClienteQChega -> (EstadoDoServidor , [CLienteQSai])
+    processaSimulacao estServ cliente = (adicionarObjeto cliente estServ1, clienteQSai)
+        where
+            (estServ1, clienteQSai) = processaServidor estServ
 
-processaSimulacao :: EstadoDoServidor -> ClienteQChega -> (EstadoDoServidor,[ClienteQSai])
-processaSimulacao estServ im = (adicionaNovoObjeto im estServ1 , clienteQSai)
-                  where
-                  	(estServ1,clienteQSai) = processaServidor estServ
+    simule :: EstadoDoServidor -> [ClienteQChega] -> [CLienteQSai]
+    simule estDServ (cliente:messes) = outmesses ++ simule proxEstDServ messes
+        where (proxEstDServ, outmesses) = processaSimulacao estDServ cliente
 
-adicionaNovoObjeto :: ClienteQChega -> EstadoDoServidor -> EstadoDoServidor
-adicionaNovoObjeto Nao estServ = estServ
-adicionaNovoObjeto (Sim tempoChegada tempoNeededPatend) estServ = 
-                   colocaNumaFila (menorFila estServ) (Sim tempoChegada tempoNeededPatend)
+    -- Funcoes randomicas
+    seqRandom :: (Integer -> [Integer])
+    seqRandom = iterate proxNumRandom
 
-tamanhoDoServidor :: EstadoDoServidor -> Int
+    proxNumRandom :: Integer -> Integer
+    proxNumRandom num = rem(mult*num+incr) modul
 
-menorFila :: EstadoDoServidor -> Int
+    gerarFuncao :: [(a,Float)] -> (Float->a)
+    gerarFuncao dist = gerarFun dist 0.0
+    gerarFun((ob,p):dist) nUlt aleat | nProx >= aleat && aleat > nUlt = ob
+                                     | otherwise = gerarFun dist nProx aleat
+                                     where nProx = (p*(fromInteger modul))+nUlt
+    dist:: Num a => [(a, Float)] -- variavel
+    dist = [(1,0.2),(2,0.25),(3,0.25),(4,0.15),(5,0.1),(6,0.05)]
+
+    seqTempos :: [TempoPAtend]
+    seqTempos =  map((gerarFuncao dist).fromInteger)(seqRandom seed)                                 
+
+    entradaSimulacao = zipWith Sim[1..]seqTempos
+
+    maxClientes :: Int -- maximo de clientes que comporta o supermercado
+    maxClientes = 100
+
+    entradaSimulacaoB = take maxClientes entradaSimulacao ++ nots
+        where
+            nots = (Nao:nots)
+
+-- Fim Inicializacao
+
+
+-- EXERCICIO UM
+    tempoDeEsperaTotal :: ([CLienteQSai]->Int)
+    tempoDeEsperaTotal = sum map tempoDEsp
+        where tempoDEsp(Liberado _ t _) = t
+
+    --chamada da funcao 
+    -- tempoDeEsperaTotal(take 50(simule estadoInicialServidor entradaSimulacao2))    
+
+-- FIM EXERCICIO UM
+
+-- EXERCICIO DOIS
+-- FIM EXERCICIO DOIS
+
+-- EXERCICIO TRES
+-- FIM EXERCICIO TRES
+
+-- EXERCICIO QUATRO
+-- FIM EXERCICIO QUATRO
